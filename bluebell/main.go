@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"flag"
 	"fmt"
 	"go.uber.org/zap"
 	"golearn/bluebell/controller"
@@ -29,14 +28,14 @@ import (
 // @host 127.0.0.1:8080 1
 // @BasePath /api/v1
 func main() {
-	var filepath string
-	flag.StringVar(&filepath, "filepath", "./setting/config.yaml", "configfilepath")
-	flag.Parse()
-	if err := setting.Init(filepath); err != nil {
-
-		fmt.Printf("init setting failed,err:=%v\n", err)
-		return
-	}
+	//var filepath string
+	//flag.StringVar(&filepath, "filepath", "./setting/config.yaml", "configfilepath")
+	//flag.Parse()
+	//if err := setting.Init(filepath); err != nil {
+	//
+	//	fmt.Printf("init setting failed,err:=%v\n", err)
+	//	return
+	//}
 	if err := logger.Init(setting.Conf.Mode); err != nil {
 		fmt.Printf("init logger failed,err:=%v\n", err)
 		return
