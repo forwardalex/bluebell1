@@ -42,6 +42,8 @@ func Init(mode string) (err error) {
 	zap.ReplaceGlobals(lg)
 	return
 }
+
+//如何写日志
 func getEncoder() zapcore.Encoder {
 	encoderConfig := zap.NewProductionEncoderConfig()
 	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
@@ -51,6 +53,8 @@ func getEncoder() zapcore.Encoder {
 	encoderConfig.EncodeCaller = zapcore.ShortCallerEncoder
 	return zapcore.NewJSONEncoder(encoderConfig)
 }
+
+//日志写哪去
 func getLogWriter(fn string, maxSize, maxBackup, maxAge int) zapcore.WriteSyncer {
 	lumberjackLogger := &lumberjack.Logger{
 		Filename:   fn,
@@ -58,6 +62,9 @@ func getLogWriter(fn string, maxSize, maxBackup, maxAge int) zapcore.WriteSyncer
 		MaxBackups: maxBackup,
 		MaxAge:     maxAge,
 	}
+
+	//file, _ := os.Create("./test.log")
+	//return zapcore.AddSync(file)
 	return zapcore.AddSync(lumberjackLogger)
 }
 

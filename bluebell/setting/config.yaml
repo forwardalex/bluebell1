@@ -15,7 +15,7 @@ log:
   max_age: 30
   max_backups: 7
 mysql:
-  host: "127.0.0.1"
+  host: "121.4.129.249"
   port: 3306
   user: "root"
   password: "550507808"

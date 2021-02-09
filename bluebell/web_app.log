@@ -448,3 +448,10 @@
 {"level":"DEBUG","time":"2021-02-04T21:43:29.021+0800","caller":"bluebell/main.go:44","msg":"logger init success"}
 {"level":"INFO","time":"2021-02-04T21:45:24.152+0800","caller":"bluebell/main.go:84","msg":"Shutdown Server ..."}
 {"level":"INFO","time":"2021-02-04T21:45:24.652+0800","caller":"bluebell/main.go:93","msg":"Server exiting"}
+{"level":"DEBUG","time":"2021-02-09T19:50:29.493+0800","caller":"bluebell/main.go:44","msg":"logger init success"}
+{"level":"DEBUG","time":"2021-02-09T19:50:31.535+0800","caller":"bluebell/main.go:44","msg":"logger init success"}
+{"level":"ERROR","time":"2021-02-09T19:50:33.583+0800","caller":"mysql/mysql.go:25","msg":"connect DB faile的","error":"dial tcp 127.0.0.1:3306: connectex: No connection could be made because the target machine actively refused it."}
+{"level":"DEBUG","time":"2021-02-09T19:53:16.592+0800","caller":"bluebell/main.go:44","msg":"logger init success"}
+{"level":"DEBUG","time":"2021-02-09T19:55:35.916+0800","caller":"bluebell/main.go:44","msg":"logger init success"}
+{"level":"INFO","time":"2021-02-09T19:55:51.361+0800","caller":"bluebell/main.go:84","msg":"Shutdown Server ..."}
+{"level":"INFO","time":"2021-02-09T19:55:51.867+0800","caller":"bluebell/main.go:93","msg":"Server exiting"}
