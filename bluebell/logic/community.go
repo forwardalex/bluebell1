@@ -35,7 +35,7 @@ func CreatePost(p *models.Post) (err error) {
 }
 
 // GetPostById 根据帖子id查询帖子详情数据
-func GetPostById(pid int64) (data *models.ApiPostDetail, err error) {
+func GetPostById(pid int64) (data *models.ReplyList, err error) {
 	// 查询并组合我们接口想用的数据
 	post, err := mysql.GetPostById(pid)
 	if err != nil {
@@ -60,11 +60,20 @@ func GetPostById(pid int64) (data *models.ApiPostDetail, err error) {
 			zap.Error(err))
 		return
 	}
+	reply, err := mysql.GetPostReply(pid)
+	if err != nil {
+		zap.L().Error("mysql.GetPostReply() failed", zap.Error(err))
+		return
+	}
 	// 接口数据拼接
-	data = &models.ApiPostDetail{
+	data1 := &models.ApiPostDetail{
 		AuthorName:      user.Username,
 		Post:            post,
 		CommunityDetail: community,
+	}
+	data = &models.ReplyList{
+		ApiPostDetail: data1,
+		Reply:         reply,
 	}
 	return
 }
@@ -226,4 +235,10 @@ func GetPostListNew(p *models.ParamPostList) (data []*models.ApiPostDetail, err 
 		return nil, err
 	}
 	return
+}
+
+// CreatReply 帖子回复
+func CreateReply(r *models.Reply) (err error) {
+
+	return err
 }

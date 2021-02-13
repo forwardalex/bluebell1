@@ -9,7 +9,6 @@ import (
 	"golearn/bluebell/dao/mysql"
 	"golearn/bluebell/logic"
 	"golearn/bluebell/models"
-	"net/http"
 )
 
 // SignUpHandler 用户注册
@@ -44,9 +43,10 @@ func SignUpHandler(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"msg": "success",
-	})
+	//c.JSON(http.StatusOK, gin.H{
+	//	"msg": "success",
+	//})
+	ResponseSuccess(c, nil)
 }
 func LoginHandler(c *gin.Context) {
 	p := new(models.ParamLogin)

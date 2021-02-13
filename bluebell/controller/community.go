@@ -131,6 +131,7 @@ func GetPostDetailHandler(c *gin.Context) {
 
 //GetPostListHandler 帖子列表
 func GetPostListHandler(c *gin.Context) {
+
 	page, size := getPageInfo(c)
 	data, err := logic.GetPostList(page, size)
 	if err != nil {
@@ -176,4 +177,27 @@ func GetPostListHandler2(c *gin.Context) {
 	}
 	ResponseSuccess(c, data)
 	// 返回响应
+}
+
+//CreateReply 帖子回复功能
+func CreateReplyHandler(c *gin.Context) {
+	r := new(models.Reply)
+	if err := c.ShouldBindJSON(r); err != nil {
+		zap.L().Error("c.ShouldBindJSON(p) error", zap.Error(err))
+		ResponseError(c, CodeInvalidParam)
+		return
+	}
+	userID, err := getCurrentUserID(c)
+	if err != nil {
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+	r.AuthorID = userID
+	if err := logic.CreateReply(r); err != nil {
+		zap.L().Error("logic.CreateReply(p) failed", zap.Error(err))
+		ResponseError(c, CodeServerBusy)
+		return
+	}
+	//返回响应
+	ResponseSuccess(c, nil)
 }

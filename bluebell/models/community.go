@@ -23,6 +23,13 @@ type Post struct {
 	Content     string    `json:"content" db:"content" binding:"required"`
 	CreateTime  time.Time `json:"create_time" db:"create_time"`
 }
+type Reply struct {
+	ID         int64     `json:"id,string" db:"post_id"`
+	AuthorID   int64     `json:"author_id" db:"author_id"`
+	ReplyID    int64     `json:"reply_id" db:"reply_id"`
+	Content    string    `json:"content" db:"content" binding:"required"`
+	CreateTime time.Time `json:"create_time" db:"create_time"`
+}
 
 // ApiPostDetail 帖子详情接口的结构体
 type ApiPostDetail struct {
@@ -30,4 +37,10 @@ type ApiPostDetail struct {
 	VoteNum          int64              `json:"vote_num"`
 	*Post                               // 嵌入帖子结构体
 	*CommunityDetail `json:"community"` // 嵌入社区信息
+
+}
+
+type ReplyList struct {
+	*ApiPostDetail
+	Reply []*Reply
 }

@@ -88,3 +88,22 @@ func GetPostListByIDs(ids []string) (postList []*models.Post, err error) {
 	err = db.Select(&postList, query, args...) // !!!!!!
 	return
 }
+
+func GetPostReply(pid int64) (reply []*models.Reply, err error) {
+	sqlStr := `select post_id, author_id,reply_id,content, create_time
+	from reply
+	where post_id in (?)
+	order by create_time
+	`
+	reply = make([]*models.Reply, 0, 2)
+	err = db.Get(&reply, sqlStr, pid)
+	return
+}
+func CreateReply(p *models.Reply) (err error) {
+	sqlStr := `insert into reply(
+	post_id, author_id, reply_id, content)
+	values (?, ?, ?, ?)
+	`
+	_, err = db.Exec(sqlStr, p.ID, p.AuthorID, p.ReplyID, p.Content)
+	return
+}
