@@ -16,7 +16,7 @@ type CommunityDetail struct {
 
 type Post struct {
 	ID          int64     `json:"id,string" db:"post_id"`
-	AuthorID    int64     `json:"author_id" db:"author_id"`
+	AuthorID    int64     `json:"author_id,string" db:"author_id"`
 	CommunityID int64     `json:"community_id" db:"community_id" binding:"required"`
 	Status      int32     `json:"status" db:"status"`
 	Title       string    `json:"title" db:"title" binding:"required"`
@@ -24,9 +24,10 @@ type Post struct {
 	CreateTime  time.Time `json:"create_time" db:"create_time"`
 }
 type Reply struct {
-	ID         int64     `json:"id,string" db:"post_id"`
-	AuthorID   int64     `json:"author_id" db:"author_id"`
-	ReplyID    int64     `json:"reply_id" db:"reply_id"`
+	PostID     int64     `json:"post_id,string" db:"post_id"`
+	AuthorID   int64     `json:"author_id,string" db:"author_id"`
+	ReAuthorID int64     `json:"author_id,string" db:"re_author_id"`  //回复的用户ID
+	ReplyID    int64     `json:"reply_id,string" db:"reply_id"`
 	Content    string    `json:"content" db:"content" binding:"required"`
 	CreateTime time.Time `json:"create_time" db:"create_time"`
 }
@@ -42,5 +43,5 @@ type ApiPostDetail struct {
 
 type ReplyList struct {
 	*ApiPostDetail
-	Reply []*Reply
+	Reply []*Reply  `json:"reply"`
 }

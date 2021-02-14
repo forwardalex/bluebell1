@@ -883,43 +883,45 @@
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="259" parent="231" name="post_id">
+    <column id="259" parent="231" name="reply_id">
       <Position>2</Position>
+      <Comment>回复的帖子</Comment>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="260" parent="231" name="post_id">
+      <Position>3</Position>
       <Comment>帖子id</Comment>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="260" parent="231" name="author_id">
-      <Position>3</Position>
+    <column id="261" parent="231" name="author_id">
+      <Position>4</Position>
       <Comment>作者的用户id</Comment>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="261" parent="231" name="reply_id">
-      <Position>4</Position>
+    <column id="262" parent="231" name="re_author_id">
+      <Position>5</Position>
       <Comment>回复的用户id</Comment>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="262" parent="231" name="content">
-      <Position>5</Position>
+    <column id="263" parent="231" name="content">
+      <Position>6</Position>
       <Comment>内容</Comment>
       <DataType>varchar(8192)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="263" parent="231" name="create_time">
-      <Position>6</Position>
+    <column id="264" parent="231" name="create_time">
+      <Position>7</Position>
       <Comment>创建时间</Comment>
       <DataType>timestamp|0s</DataType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
-    <index id="264" parent="231" name="idx_post_id">
-      <ColNames>post_id</ColNames>
+    <index id="265" parent="231" name="idx_reply_id">
+      <ColNames>reply_id</ColNames>
       <Unique>1</Unique>
-      <Type>btree</Type>
-    </index>
-    <index id="265" parent="231" name="idx_author_id">
-      <ColNames>author_id</ColNames>
       <Type>btree</Type>
     </index>
     <key id="266" parent="231" name="PRIMARY">
@@ -927,9 +929,9 @@
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="267" parent="231" name="idx_post_id">
-      <ColNames>post_id</ColNames>
-      <UnderlyingIndexName>idx_post_id</UnderlyingIndexName>
+    <key id="267" parent="231" name="idx_reply_id">
+      <ColNames>reply_id</ColNames>
+      <UnderlyingIndexName>idx_reply_id</UnderlyingIndexName>
     </key>
     <column id="268" parent="232" name="id">
       <Position>1</Position>

@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"golearn/bluebell/dao/mysql"
 	"golearn/bluebell/logic"
 	"golearn/bluebell/models"
+	"golearn/bluebell/pkg/snowflake"
 	"strconv"
 )
 
@@ -117,9 +119,12 @@ func GetPostDetailHandler(c *gin.Context) {
 		ResponseError(c, CodeInvalidParam)
 		return
 	}
-
+	//此为查询回复数量的页数,和每页的大小
+	page:=int64(1)
+	size:=int64(10)
+	page, size = getPageInfo(c)
 	// 2. 根据id取出帖子数据（查数据库）
-	data, err := logic.GetPostById(pid)
+	data, err := logic.GetPostById(pid,page,size)
 	if err != nil {
 		zap.L().Error("logic.GetPostById(pid) failed", zap.Error(err))
 		ResponseError(c, CodeServerBusy)
@@ -182,6 +187,8 @@ func GetPostListHandler2(c *gin.Context) {
 //CreateReply 帖子回复功能
 func CreateReplyHandler(c *gin.Context) {
 	r := new(models.Reply)
+	pidStr := c.Param("id")
+	pid, err := strconv.ParseInt(pidStr, 10, 64)
 	if err := c.ShouldBindJSON(r); err != nil {
 		zap.L().Error("c.ShouldBindJSON(p) error", zap.Error(err))
 		ResponseError(c, CodeInvalidParam)
@@ -192,8 +199,16 @@ func CreateReplyHandler(c *gin.Context) {
 		ResponseError(c, CodeServerBusy)
 		return
 	}
-	r.AuthorID = userID
-	if err := logic.CreateReply(r); err != nil {
+	author,err:=mysql.GetPostById(pid)
+	if err != nil {
+		zap.L().Error("mysql.GetPostById(pid) error", zap.Error(err))
+		return
+	}
+	r.AuthorID=author.AuthorID
+	r.ReAuthorID = userID
+	r.PostID=pid
+	r.ReplyID=snowflake.GenID()
+		if err := logic.CreateReply(r); err != nil {
 		zap.L().Error("logic.CreateReply(p) failed", zap.Error(err))
 		ResponseError(c, CodeServerBusy)
 		return

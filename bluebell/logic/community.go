@@ -35,7 +35,7 @@ func CreatePost(p *models.Post) (err error) {
 }
 
 // GetPostById 根据帖子id查询帖子详情数据
-func GetPostById(pid int64) (data *models.ReplyList, err error) {
+func GetPostById(pid, page, size int64) (data *models.ReplyList, err error) {
 	// 查询并组合我们接口想用的数据
 	post, err := mysql.GetPostById(pid)
 	if err != nil {
@@ -60,7 +60,7 @@ func GetPostById(pid int64) (data *models.ReplyList, err error) {
 			zap.Error(err))
 		return
 	}
-	reply, err := mysql.GetPostReply(pid)
+	reply, err := mysql.GetPostReply(pid,page,size)
 	if err != nil {
 		zap.L().Error("mysql.GetPostReply() failed", zap.Error(err))
 		return
@@ -239,6 +239,17 @@ func GetPostListNew(p *models.ParamPostList) (data []*models.ApiPostDetail, err 
 
 // CreatReply 帖子回复
 func CreateReply(r *models.Reply) (err error) {
+		// 2. 保存到数据库
+	err = mysql.CreateReply(r)
+	if err != nil {
+		zap.L().Error("create reply into mysql err", zap.Error(err))
+		return err
+	}
+	//err = redis.CreateReply(r.ID, r.Content)
+	//if err != nil {
+	//	zap.L().Error("create post into redis err", zap.Error(err))
+	//	return err
+	//}
+	return
 
-	return err
 }
